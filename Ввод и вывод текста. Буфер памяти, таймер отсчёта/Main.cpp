@@ -105,7 +105,7 @@ LRESULT CALLBACK WindowProcess(HWND hWindow, UINT uMessage,
             size = 0;
             break;
         default:
-            text[size] = (char)wParameter;
+            text[size] = (wchar_t)wParameter;
             size++;
             break;
         }
