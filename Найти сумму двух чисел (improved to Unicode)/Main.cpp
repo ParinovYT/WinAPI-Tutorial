@@ -1,4 +1,5 @@
-﻿#include <windows.h>
+﻿#include <Windows.h>
+
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 // Функция преобразования строки в число
@@ -92,10 +93,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
     HINSTANCE hInst;
     PAINTSTRUCT ps;
     static HWND hBtn; // дескриптор кнопки
-    static HWND hEdt1, hEdt2; // дескрипторы полей редактирования
+    static HWND hEdt1, hEdt2, hEdt3; // дескрипторы полей редактирования
     static HWND hStat; // дескриптор статического текста
     TCHAR StrA[20];
-    int a, b, sum, Len;
+    int a, b, c, sum, Len;
     switch (Message) {
     case WM_CREATE: // сообщение создания окна
         hInst = ((LPCREATESTRUCT)lparam)->hInstance; // дескриптор приложения
@@ -109,6 +110,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
             WS_CHILD | WS_VISIBLE | WS_BORDER | ES_RIGHT, 150, 50, 60,
             20, hwnd, 0, hInst, NULL);
         ShowWindow(hEdt2, SW_SHOWNORMAL);
+        hEdt3 = CreateWindow(L"edit", L"0",
+            WS_CHILD | WS_VISIBLE | WS_BORDER | ES_RIGHT, 250, 50, 60,
+            20, hwnd, 0, hInst, NULL);
+        ShowWindow(hEdt3, SW_SHOWNORMAL);
         // Создаем и показываем кнопку
         hBtn = CreateWindow(L"button", L"Рассчитать",
             WS_CHILD | WS_VISIBLE | WS_BORDER,
@@ -126,13 +131,15 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
             a = StrToInt(StrA); // считываем число из первого поля
             Len = GetWindowText(hEdt2, StrA, 20);
             b = StrToInt(StrA); // считываем число из второго поля
-            sum = a + b;  // находим сумму двух чисел
+            Len = GetWindowText(hEdt3, StrA, 20);
+            c = StrToInt(StrA); // считываем число из второго поля
+            sum = a + b + c;  // находим сумму двух чисел
             SetWindowText(hStat, IntToStr(sum)); // выводим результат в статическое поле
         }
         break;
     case WM_PAINT: // перерисовка окна
         hdc = BeginPaint(hwnd, &ps); // начало перерисовки
-        TextOut(hdc, 50, 20, L"Введите два числа", 18); // вывод текстовых сообщений
+        TextOut(hdc, 50, 20, L"Введите три числа", 18); // вывод текстовых сообщений
         TextOut(hdc, 50, 180, L"Результат:", 10);
         EndPaint(hwnd, &ps); // конец перерисовки
         break;
