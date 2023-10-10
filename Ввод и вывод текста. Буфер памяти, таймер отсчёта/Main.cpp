@@ -97,6 +97,10 @@ LRESULT CALLBACK WindowProcess(HWND hWindow, UINT uMessage,
     case WM_CHAR:
         switch (wParameter)
         {
+        case VK_BACK:
+            if (size != 0)
+                size--;
+            break;
         case VK_RETURN:
             size = 0;
             break;
